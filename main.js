@@ -3,7 +3,7 @@ var window_width = 500;
 var window_height = 500;
 var density = particle_number/(window_width*window_height);
 
-var T = 1000;
+var T = 10;
 var k = 1;
 var g = 10;
 var dt = 0.01;
