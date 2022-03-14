@@ -1,7 +1,5 @@
 import math
-from turtle import width
 import numpy as np
-# from particle import FreeParticle 
 
 def save(f, t, fps, mp, width, height):
     # text = "{};{};{}\n".format(t, {"x": mp.x, "y": mp.y, "vx": mp.vx, "vy":mp.vy}, list(map(lambda fp : {"x": fp.x, "y": fp.y, "vy":fp.vy, "vx":fp.vx}, fps)))

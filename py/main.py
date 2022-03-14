@@ -77,7 +77,7 @@ def process(particle_number, window_width, window_height, T, k, g, dt) :
                 fps.append(FreeParticle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "left", vwx, vwy))
                 num_left = num_left - 1
         
-        save(f, t, fps, mp)
+        save(f, t, fps, mp, window_width, window_height)
         # print(t, round(mp.vy, 5), round(mp.vx, 5), density, len(fps)/(window_width*window_height))
         t = t+dt
 
