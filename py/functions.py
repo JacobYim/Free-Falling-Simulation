@@ -1,9 +1,11 @@
 import math
+from turtle import width
 import numpy as np
 # from particle import FreeParticle 
 
-def save(f, t, fps, mp):
-    text = "{};{};{}\n".format(t, {"x": mp.x, "y": mp.y, "vx": mp.vx, "vy":mp.vy}, list(map(lambda fp : {"x": fp.x, "y": fp.y, "vy":fp.vy, "vx":fp.vx}, fps)))
+def save(f, t, fps, mp, width, height):
+    # text = "{};{};{}\n".format(t, {"x": mp.x, "y": mp.y, "vx": mp.vx, "vy":mp.vy}, list(map(lambda fp : {"x": fp.x, "y": fp.y, "vy":fp.vy, "vx":fp.vx}, fps)))
+    text = "{};{};{}\n".format(t, mp.vy, len(fps)/(width*height))
     f.write(text)
 
 def erf(x):
@@ -133,7 +135,6 @@ def calculate_particles_collision(fp, mp):
         new_fp_vy = list_v[3]      
         new_fp_y = mp.y  + col_angle_sin*(mp.r/2)
         new_fp_x = mp.x  + col_angle_cos*(mp.r/2)
-    
 
     return [collision_check,new_mp_vx,new_mp_vy,new_fp_x,new_fp_y,new_fp_vx,new_fp_vy]
 

@@ -17,7 +17,8 @@ def process(particle_number, window_width, window_height, T, k, g, dt) :
     filename = "HIST_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, k, g, dt)
     length = len(list(filter(lambda x : filename in x,os.listdir('result'))))
     f = open('result/'+filename+"_({})".format(length)+".csv", "a+")
-    f.write("time;mp;list_fps\n")
+    # f.write("time;mp;list_fps\n")
+    f.write("time;final_velocity;density\n")
 
     density = particle_number/(window_width*window_height)
     cnt_hit_cur_v = 0
