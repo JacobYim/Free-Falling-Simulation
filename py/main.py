@@ -15,7 +15,7 @@ procs_num = 100
 
 def process(particle_number, window_width, window_height, T, k, g, dt) :
 
-    filename = "HIST_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, k, g, dt)
+    filename = "result/HIST_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, k, g, dt)
     length = len(list(filter(lambda x : filename in x,os.listdir())))
     f = open(filename+"_({})".format(length)+".csv", "a+")
     f.write("time;mp;list_fps\n")
@@ -90,9 +90,11 @@ def process(particle_number, window_width, window_height, T, k, g, dt) :
                     break
 
 if __name__ == '__main__':
-    # for num in range(procs_num):
-    #     for temperature in range(100, 5000, 100) :
-    #         p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
-    #         p.start()
-    p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
-    p.start()
+    if not 'result' in os.listdir() :
+        os.mkdir('result')
+    for num in range(procs_num):
+        for T in range(100, 5000, 100) :
+            p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
+            p.start()
+    # p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
+    # p.start()
