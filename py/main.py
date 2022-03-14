@@ -1,7 +1,6 @@
 from particle import MainParticle, FreeParticle, calculate_paticles_to_add
 from multiprocessing import Process
 from functions import calculate_particles_collision, check_remove_paricle, save
-from tqdm import tqdm
 import os
 
 particle_number = 250
@@ -15,9 +14,9 @@ procs_num = 100
 
 def process(particle_number, window_width, window_height, T, k, g, dt) :
 
-    filename = "result/HIST_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, k, g, dt)
-    length = len(list(filter(lambda x : filename in x,os.listdir())))
-    f = open(filename+"_({})".format(length)+".csv", "a+")
+    filename = "HIST_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, k, g, dt)
+    length = len(list(filter(lambda x : filename in x,os.listdir('result'))))
+    f = open('result/'+filename+"_({})".format(length)+".csv", "a+")
     f.write("time;mp;list_fps\n")
 
     density = particle_number/(window_width*window_height)
@@ -35,10 +34,10 @@ def process(particle_number, window_width, window_height, T, k, g, dt) :
     num_left = 0
 
     mp = MainParticle(window_width, window_height, g, dt, mp_m, mp_r)
-    fps = [FreeParticle(window_width, window_height, g, dt, fp_m, fp_r, T, 1, mp, None, mp.vx, mp.vy) for _ in tqdm(range(particle_number), ascii=True ,desc="generationg free particles ...".format(t))]
+    fps = [FreeParticle(window_width, window_height, g, dt, fp_m, fp_r, T, 1, mp, None, mp.vx, mp.vy) for _ in range(particle_number)]
 
     while (True) :
-        for i in tqdm(range(0, len(fps)), ascii=True ,desc="{}".format(round(t,3))) :
+        for i in range(0, len(fps)) :
             # update depend on whether collision occurred or not
             [collision_check, mp.vx, mp.vy, fps[i].x,fps[i].y, fps[i].vx, fps[i].vy] = calculate_particles_collision(fps[i], mp)
             # calculate next time steps of free particles
