@@ -7,33 +7,36 @@ def save(f, t, fps, mp):
     f.write(text)
 
 def erf(x):
-    retval = 0.0
-    neg = False
-    if (x < 0):
-      neg = True
-      x = (-1)*x
+    return math.erf(x)
+    # retval = 0.0
+    # neg = False
+    # if (x < 0):
+    #   neg = True
+    #   x = (-1)*x
      
-    dx = x/1000
+    # dx = x/1000
     
-    if (x == 0.0) :
-        x = 1e-15
+    # if (x == 0.0) :
+    #     x = 1e-15
 
-    for i in list(np.arange(0, x, x/1000)) :
-      retval += dx * math.exp(-1*(i**2))
+    # # for i in list(np.arange(0, x, x/1000)) :
+    # #   retval += dx * math.exp(-1*(i**2))
     
-    retval = retval*2/math.sqrt(math.pi)
-    if (retval > 1):
-      retval = 1.0
-    
-    if(abs(retval) == 0) :
-        retval = 1e-15
-    else :
-        retval = retval
+    # retval = sum([math.exp(-1*(i**2)) for i in list(np.arange(0, x, x/1000))])*dx
 
-    if (neg):
-      retval = (-1)*retval
+    # retval = retval*2/math.sqrt(math.pi)
+    # if (retval > 1):
+    #   retval = 1.0
+    
+    # if(abs(retval) == 0) :
+    #     retval = 1e-15
+    # else :
+    #     retval = retval
+
+    # if (neg):
+    #   retval = (-1)*retval
         
-    return retval
+    # return retval
 
 
 def A (alpha, vw, x) :

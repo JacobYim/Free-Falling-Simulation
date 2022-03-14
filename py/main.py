@@ -1,6 +1,6 @@
 from particle import MainParticle, FreeParticle, calculate_paticles_to_add
-from functions import calculate_particles_collision, check_remove_paricle, save
 from multiprocessing import Process
+from functions import calculate_particles_collision, check_remove_paricle, save
 from tqdm import tqdm
 import os
 
@@ -12,6 +12,7 @@ k = 1
 g = 10
 dt = 0.01
 procs_num = 100
+
 def process(particle_number, window_width, window_height, T, k, g, dt) :
 
     filename = "HIST_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, k, g, dt)
@@ -20,6 +21,8 @@ def process(particle_number, window_width, window_height, T, k, g, dt) :
     f.write("time;mp;list_fps\n")
 
     density = particle_number/(window_width*window_height)
+    cnt_hit_cur_v = 0
+    vys = []
     t = 0.0
     mp_m = 100
     mp_r = 50
@@ -78,7 +81,18 @@ def process(particle_number, window_width, window_height, T, k, g, dt) :
         # print(t, round(mp.vy, 5), round(mp.vx, 5), density, len(fps)/(window_width*window_height))
         t = t+dt
 
+        
+        vys.append(mp.vy)
+        if len(vys) > 500 :
+            if abs(sum(vys[-500:])/500 - mp.vy) < 0.1 :
+                cnt_hit_cur_v += 1
+                if cnt_hit_cur_v > 50 :
+                    break
+
 if __name__ == '__main__':
-    for num in range(procs_num):
-        p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
-        p.start()
+    # for num in range(procs_num):
+    #     for temperature in range(100, 5000, 100) :
+    #         p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
+    #         p.start()
+    p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
+    p.start()

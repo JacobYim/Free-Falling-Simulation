@@ -125,7 +125,5 @@ def calculate_paticles_to_add(mp, fps, fp_m, fp_r, density, dt, k, g, T, window_
     num_left    += density * math.sqrt((2*k*T)/(fp_m)) * dt / 2 * (math.exp(-1*(vwx/a)**2)/math.sqrt(math.pi) -(vwx/a)*erfc(vwx/a)) * window_height
     num_bottom  += density * math.sqrt((2*k*T)/(fp_m)) * dt / 2 * (math.exp(-1*(vwy/a)**2)/math.sqrt(math.pi) +(vwy/a)*erfc((-1)*vwy/a)) * window_width
     num_top     += density * math.sqrt((2*k*T)/(fp_m)) * dt / 2 * (math.exp(-1*(vwy/a)**2)/math.sqrt(math.pi) -(vwy/a)*erfc(vwy/a)) * window_width
-
     
-        
     return [fps, num_bottom, num_top, num_right, num_left]
