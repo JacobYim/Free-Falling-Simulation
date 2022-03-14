@@ -1,4 +1,4 @@
-sbatch ____.sb
+sbatch ____.sh
 
 squeue
 
