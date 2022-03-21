@@ -47,6 +47,7 @@ function draw() {
       }
   }
   mp.update();
+  // mp.vy = 5000;
   // add new particles
   [num_bottom, num_top, num_right, num_left] = calculate_paticles_to_add(mp, fp_m, fp_r, density, dt, g, T, window_width, window_height, num_bottom, num_top, num_right, num_left);    
   console.log(round(t,4), mp.vy, mp.vx, density, fps.length/(window_width*window_height));

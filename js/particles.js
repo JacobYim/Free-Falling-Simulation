@@ -54,7 +54,7 @@ class main_particle{
           this.vx = vx1;
           radian=random(90,270)*(TWO_PI/360);
           radian=random(135,225)*(TWO_PI/360);
-          // radian=180*(TWO_PI/360);
+          radian=180*(TWO_PI/360);
           break;
         case 'left':
           //  left
@@ -68,7 +68,7 @@ class main_particle{
           this.vx = vx2;
           radian=random(270,450)*(TWO_PI/360);
           radian=random(315,405)*(TWO_PI/360);
-          // radian=360*(TWO_PI/360);
+          radian=360*(TWO_PI/360);
           break;
         case 'top' :
           //  top
@@ -83,7 +83,7 @@ class main_particle{
           this.vy = vy2;
           radian=random(0,180)*(TWO_PI/360);
           radian=random(45,135)*(TWO_PI/360);
-          // radian=90*(TWO_PI/360);
+          radian=90*(TWO_PI/360);
           break;
         case 'bottom' :
           //  bottom
@@ -97,7 +97,7 @@ class main_particle{
           this.vy = vy1;
           radian=random(180,360)*(TWO_PI/360);
           radian=random(225,315)*(TWO_PI/360);
-          // radian=270*(TWO_PI/360);
+          radian=270*(TWO_PI/360);
           break;
         default:
             
@@ -114,9 +114,9 @@ class main_particle{
           this.vy = random([-1, 1]) * randomGaussian(0, Math.sqrt(this.k*this.T/(this.mass)))
           radian = random(0,360)*(TWO_PI/360);
       }
-      var v = Math.sqrt(this.vx**2+this.vy**2);
-      this.vx = v*cos(radian);
-      this.vy = v*sin(radian);
+      // var v = Math.sqrt(this.vx**2+this.vy**2);
+      // this.vx = v*cos(radian);
+      // this.vy = v*sin(radian);
     }
     
     update(mp){
