@@ -2,6 +2,7 @@ from particle import MainParticle, FreeParticle, calculate_paticles_to_add
 from multiprocessing import Process
 from functions import calculate_particles_collision, check_remove_paricle, save
 import os
+import sys
 
 particle_number = 250
 window_width = 500
@@ -11,12 +12,14 @@ k = 1
 g = 10
 dt = 0.01
 procs_num = 100
+radius_rate = 1/10
+mass_rate = 1/100
 
-def process(particle_number, window_width, window_height, T, k, g, dt) :
+def process(particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir) :
 
-    filename = "HIST_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, k, g, dt)
-    length = len(list(filter(lambda x : filename in x,os.listdir('result'))))
-    f = open('result/'+filename+"_({})".format(length)+".csv", "a+")
+    filename = "HIST_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, radius_rate, mass_rate , k, g, dt)
+    length = len(list(filter(lambda x : filename in x,os.listdir(data_dir))))
+    f = open(data_dir+'/'+filename+"_({})".format(length)+".csv", "a+")
     # f.write("time;mp;list_fps\n")
     f.write("time;final_velocity;density\n")
 
@@ -26,8 +29,8 @@ def process(particle_number, window_width, window_height, T, k, g, dt) :
     t = 0.0
     mp_m = 100
     mp_r = 50
-    fp_m = mp_m/100
-    fp_r = mp_r/10
+    fp_m = mp_m*mass_rate
+    fp_r = mp_r*radius_rate
 
     num_top = 0
     num_bottom = 0
@@ -90,11 +93,29 @@ def process(particle_number, window_width, window_height, T, k, g, dt) :
                     break
 
 if __name__ == '__main__':
-    if not 'result' in os.listdir() :
-        os.mkdir('result')
+
+    if sys.argv[1] == "RR" :
+        sim = {"sim_name":"RR", "range": list(map(lambda x : x/10, range(1, 10)))}
+    elif sys.argv[1] == "MR" :
+        sim = {"sim_name":"MR", "range": list(map(lambda x : x/10, range(1, 10)))}
+    else :
+        sim = {"sim_name":"T", "range": list(range(500, 5000, 500))}
+    
+    data_dir = 'result_'+sim['sim_name']
+    if not data_dir in os.listdir() :
+        os.mkdir(data_dir)
     for num in range(procs_num):
-        for T in range(100, 5000, 100) :
-            p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
-            p.start()
+        if sim['sim_name'] == "T" :
+            for T in sim['range'] :
+                p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
+                p.start()
+        elif sim['sim_name'] == "RR" :
+            for rr in sim['range'] :
+                p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
+                p.start()
+        elif sim['sim_name'] == "MR" :
+            for mr in sim['range'] :
+                p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt, radius_rate, mr, data_dir))
+                p.start()
     # p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
     # p.start()
