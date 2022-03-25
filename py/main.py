@@ -92,12 +92,14 @@ def process(particle_number, window_width, window_height, T, k, g, dt, radius_ra
                 if cnt_hit_cur_v > 50 :
                     break
 
+    f.close()
+
 if __name__ == '__main__':
 
     if sys.argv[1] == "RR" :
         sim = {"sim_name":"RR", "range": list(map(lambda x : x/10, range(1, 10)))}
     elif sys.argv[1] == "MR" :
-        sim = {"sim_name":"MR", "range": list(map(lambda x : x/10, range(1, 10)))}
+        sim = {"sim_name":"MR", "range": list(map(lambda x : x/100, range(1, 100, 10)))}
     else :
         sim = {"sim_name":"T", "range": list(range(500, 5000, 500))}
     
