@@ -100,6 +100,8 @@ if __name__ == '__main__':
         sim = {"sim_name":"RR", "range": list(map(lambda x : x/10, range(1, 10)))}
     elif sys.argv[1] == "MR" :
         sim = {"sim_name":"MR", "range": list(map(lambda x : x/100, range(1, 100, 10)))}
+    elif sys.argv[1] == "D" :
+        sim = {"sim_name":"D", "range": list(map(lambda x : x/1000, range(1, 100, 10)))}
     else :
         sim = {"sim_name":"T", "range": list(range(500, 5000, 500))}
     
@@ -109,15 +111,19 @@ if __name__ == '__main__':
     for num in range(procs_num):
         if sim['sim_name'] == "T" :
             for T in sim['range'] :
-                p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
+                p =Process(target=process, args=(particle_number,                       window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
                 p.start()
         elif sim['sim_name'] == "RR" :
             for rr in sim['range'] :
-                p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
+                p =Process(target=process, args=(particle_number,                       window_width, window_height, T, k, g, dt, rr, mass_rate, data_dir))
                 p.start()
         elif sim['sim_name'] == "MR" :
             for mr in sim['range'] :
-                p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt, radius_rate, mr, data_dir))
+                p =Process(target=process, args=(particle_number,                       window_width, window_height, T, k, g, dt, radius_rate, mr, data_dir))
+                p.start()
+        elif sim['sim_name'] == "D" :
+            for density in sim['range'] :
+                p =Process(target=process, args=(int(density*window_height*window_width),    window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
                 p.start()
     # p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
     # p.start()

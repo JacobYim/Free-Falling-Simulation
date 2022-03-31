@@ -1,2 +1,7 @@
-___pycache___/
+__pycache__/
 venv/
+result_*/
+*.jpg
+*.out
+temp_result_*/
+test_result_*/

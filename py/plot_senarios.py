@@ -1,13 +1,22 @@
 import matplotlib.pyplot as plt
 import csv
 import os
+import sys
 
 times_list = []
 vys_list = []
 density_list = []
 
-dir_name = "test_result_MR"
+dir_name = sys.argv[1]
 files = os.listdir(dir_name)
+
+if sys.argv[2] == "MR" :
+    files = list(filter( lambda x : float(x.split('_')[6])==float(sys.argv[3]), files))
+elif sys.argv[2] == "T" :
+    files = list(filter( lambda x : float(x.split('_')[4])==float(sys.argv[3]), files))
+elif sys.argv[2] == "RR" :
+    files = list(filter( lambda x : float(x.split('_')[5])==float(sys.argv[3]), files))
+
 for file in files :
     with open(dir_name+'/'+file) as csvfile:
         times = []
@@ -23,8 +32,6 @@ for file in files :
                     density.append(temp_density)
                 except :
                     print ("error", i, row)
-            else :
-                print (i, row)
         times_list.append(times)
         vys_list.append(vys)
         density_list.append(density)
@@ -32,11 +39,11 @@ for file in files :
 
 for times, vys in zip(times_list, vys_list) :
     plt.plot(times, vys)
-plt.savefig("tvsvy.jpg")
+plt.savefig(sys.argv[2]+"_"+sys.argv[3]+"_tvsvy.jpg")
 
 plt.clf()
 plt.cla()
 
 for times, density in zip(times_list, density_list) :
     plt.plot(times, density)
-plt.savefig("density.jpg")
+plt.savefig(sys.argv[2]+"_"+sys.argv[3]+"density.jpg")
