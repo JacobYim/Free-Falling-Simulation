@@ -156,26 +156,27 @@ function calculate_paticles_to_add1(mp, fp_m, density, dt, g, T, window_width, w
     if (num_bottom > 0 ){
         for(var i = 0; i < int(num_bottom); i++){
             fps.push(new free_particle(window_width, window_height, g, dt, fp_m, fp_r, T, 1, mp, false, "bottom"));
-            num_bottom = num_bottom - int(num_bottom)
         }
+        num_bottom = num_bottom - int(num_bottom)
     }
     if (num_top > 0 ){
         for(var i = 0; i < int(num_top); i++){
             fps.push(new free_particle(window_width, window_height, g, dt, fp_m, fp_r, T, 1, mp, false, "top"));
-            num_top = num_top - int(num_top)
         }
+        num_top = num_top - int(num_top)        
     }
     if (num_right > 0 ){
         for(var i = 0; i < int(num_right); i++){
             fps.push(new free_particle(window_width, window_height, g, dt, fp_m, fp_r, T, 1, mp, false, "right"));
-            num_right = num_right - int(num_right)
         }
+        num_right = num_right - int(num_right)
+        
     }
     if (num_left > 0 ){
         for(var i = 0; i < int(num_left); i++){
             fps.push(new free_particle(window_width, window_height, g, dt, fp_m, fp_r, T, 1, mp, false, "left"));
-            num_left = num_left - int(num_left)
         }
+        num_left = num_left - int(num_left)
     }
 
     return [num_bottom, num_top, num_right, num_left]
@@ -199,26 +200,28 @@ function calculate_paticles_to_add(mp, fp_m, fp_r, density, dt, g, T, window_wid
     if (num_bottom > 0 ){
         for(var i = 0; i < int(num_bottom); i++){
             fps.push(new free_particle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "bottom", vwx, vwy));
-            num_bottom = num_bottom - 1;
         }
+        num_bottom = num_bottom - int(num_bottom);
     }
     if (num_top > 0 ){
         for(var i = 0; i < int(num_top); i++){
             fps.push(new free_particle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "top", vwx, vwy));
-            num_top = num_top - 1;
         }
+        num_top = num_top - int(num_top);
+        
     }
     if (num_right > 0 ){
         for(var i = 0; i < int(num_right); i++){
             fps.push(new free_particle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "right", vwx, vwy));
-            num_right = num_right - 1;
         }
+        num_right = num_right - int(num_right);
     }
     if (num_left > 0 ){
         for(var i = 0; i < int(num_left); i++){
             fps.push(new free_particle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "left", vwx, vwy));
-            num_left = num_left - 1;
         }
+        num_left = num_left - int(num_left);
+        
     }
 
     return [num_bottom, num_top, num_right, num_left]

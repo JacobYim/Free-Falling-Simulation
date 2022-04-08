@@ -56,25 +56,25 @@ def process(particle_number, window_width, window_height, T, k, g, dt, radius_ra
         if (num_bottom > 0 ):
             for i in range(0, int(num_bottom)):
                 fps.append(FreeParticle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "bottom", vwx, vwy))
-                num_bottom = num_bottom - 1
+            num_bottom = num_bottom - int(num_bottom)
             
         
         if (num_top > 0 ):
             for i in range(0, int(num_top)):
                 fps.append(FreeParticle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "top", vwx, vwy))
-                num_top = num_top - 1
+            num_top = num_top - int(num_top)
             
         
         if (num_right > 0 ):
             for i in range(0, int(num_right)):
                 fps.append(FreeParticle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "right", vwx, vwy))
-                num_right = num_right - 1
+            num_right = num_right - int(num_right)
             
         
         if (num_left > 0 ):
             for i in range(0, int(num_left)):
                 fps.append(FreeParticle(window_width, window_height, g, dt, fp_m, fp_r, T, k, mp, "left", vwx, vwy))
-                num_left = num_left - 1
+            num_left = num_left - int(num_left)
         
         save(f, t, fps, mp, window_width, window_height)
         # print(t, round(mp.vy, 5), round(mp.vx, 5), density, len(fps)/(window_width*window_height))
