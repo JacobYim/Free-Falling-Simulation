@@ -15,11 +15,11 @@ procs_num = 100
 radius_rate = 1/10
 mass_rate = 1/100
 
-def process(particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir) :
+def process(num, particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir) :
 
     filename = "HIST_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, radius_rate, mass_rate , k, g, dt)
-    length = len(list(filter(lambda x : filename in x,os.listdir(data_dir))))
-    f = open(data_dir+'/'+filename+"_({})".format(length)+".csv", "a+")
+    # length = len(list(filter(lambda x : filename in x,os.listdir(data_dir))))
+    f = open(data_dir+'/'+filename+"_({})".format(num)+".csv", "a+")
     f.write("time;final_velocity;density\n")
     density = particle_number/(window_width*window_height)
     cnt_hit_cur_v = 0
@@ -104,23 +104,22 @@ if __name__ == '__main__':
     data_dir = 'result_'+sim['sim_name']
     if not data_dir in os.listdir() :
         os.mkdir(data_dir)
-    for group in range(4) :
-        for num in range(int(procs_num/4)):
-            if sim['sim_name'] == "T" :
-                for T in sim['range'] :
-                    p =Process(target=process, args=(particle_number,                       window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
-                    p.start()
-            elif sim['sim_name'] == "RR" :
-                for rr in sim['range'] :
-                    p =Process(target=process, args=(particle_number,                       window_width, window_height, T, k, g, dt, rr, mass_rate, data_dir))
-                    p.start()
-            elif sim['sim_name'] == "MR" :
-                for mr in sim['range'] :
-                    p =Process(target=process, args=(particle_number,                       window_width, window_height, T, k, g, dt, radius_rate, mr, data_dir))
-                    p.start()
-            elif sim['sim_name'] == "D" :
-                for density in sim['range'] :
-                    p =Process(target=process, args=(int(density*window_height*window_width),    window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
-                    p.start()
+    for num in range(procs_num):
+        if sim['sim_name'] == "T" :
+            for T in sim['range'] :
+                p =Process(target=process, args=(num, particle_number,                       window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
+                p.start()
+        elif sim['sim_name'] == "RR" :
+            for rr in sim['range'] :
+                p =Process(target=process, args=(num, particle_number,                       window_width, window_height, T, k, g, dt, rr, mass_rate, data_dir))
+                p.start()
+        elif sim['sim_name'] == "MR" :
+            for mr in sim['range'] :
+                p =Process(target=process, args=(num, particle_number,                       window_width, window_height, T, k, g, dt, radius_rate, mr, data_dir))
+                p.start()
+        elif sim['sim_name'] == "D" :
+            for density in sim['range'] :
+                p =Process(target=process, args=(num, int(density*window_height*window_width),    window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
+                p.start()
     # p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
     # p.start()
