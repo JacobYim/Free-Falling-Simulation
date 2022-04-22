@@ -25,10 +25,10 @@ def process(num, particle_number, window_width, window_height, T, k, g, dt, radi
     cnt_hit_cur_v = 0
     vys = []
     t = 0.0
-    mp_m = 100
-    mp_r = 50
-    fp_m = mp_m*mass_rate
-    fp_r = mp_r*radius_rate
+    fp_m = 1
+    fp_r = 1
+    mp_r = fp_r/radius_rate
+    mp_m = fp_m/mass_rate
 
     num_top = 0
     num_bottom = 0
@@ -93,14 +93,14 @@ def process(num, particle_number, window_width, window_height, T, k, g, dt, radi
 if __name__ == '__main__':
 
     if sys.argv[1] == "RR" :
-        sim = {"sim_name":"RR", "range": list(map(lambda x : x/100, range( 1 if int(sys.argv[2]) == 0 else int(sys.argv[2])*10, (int(sys.argv[2])+1)*10)))}
+        sim = {"sim_name":"RR", "range": list(map(lambda x : x/100, range( 100, 1000)))} # fr/mr
     elif sys.argv[1] == "MR" :
-        sim = {"sim_name":"MR", "range": list(map(lambda x : x/100, range( 1 if int(sys.argv[2]) == 0 else int(sys.argv[2])*10, (int(sys.argv[2])+1)*10)))}
+        sim = {"sim_name":"MR", "range": list(map(lambda x : x/100, range( 100, 1000)))} # fm/mm
     elif sys.argv[1] == "D" :
-        sim = {"sim_name":"D", "range": list(map(lambda x : x/1000, range( 1 if int(sys.argv[2]) == 0 else int(sys.argv[2])*10, (int(sys.argv[2])+1)*10)))}
+        sim = {"sim_name":"D",  "range": list(map(lambda x : x/1000, range( 1, 100)))}
     else :
-        sim = {"sim_name":"T", "range": list(map(lambda x : x*100, range( 1 if int(sys.argv[2]) == 0 else int(sys.argv[2])*10, (int(sys.argv[2])+1)*10)))}
-    
+        sim = {"sim_name":"T",  "range": list(map(lambda x : x*100, range( 1, 100)))}
+    print(sim['range'])
     data_dir = 'result_'+sim['sim_name']
     if not data_dir in os.listdir() :
         os.mkdir(data_dir)

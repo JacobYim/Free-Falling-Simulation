@@ -16,13 +16,4 @@
 module load python/anaconda
 ulimit -s unlimited
 
-python main.py D 0 &
-python main.py D 1 &
-python main.py D 2 &
-python main.py D 3 &
-python main.py D 4 &
-python main.py D 5 &
-python main.py D 6 &
-python main.py D 7 &
-python main.py D 8 &
-python main.py D 9 &
+python main.py D

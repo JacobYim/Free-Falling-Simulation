@@ -16,13 +16,4 @@
 module load python/anaconda
 ulimit -s unlimited
 
-python main.py MR 0 &
-python main.py MR 1 &
-python main.py MR 2 &
-python main.py MR 3 &
-python main.py MR 4 &
-python main.py MR 5 &
-python main.py MR 6 &
-python main.py MR 7 &
-python main.py MR 8 &
-python main.py MR 9 &
+python main.py MR
