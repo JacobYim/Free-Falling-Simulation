@@ -13,7 +13,7 @@ g = 10
 dt = 0.01
 procs_num = 100
 radius_rate = 1/10
-mass_rate = 1/100
+mass_rate = 1/10
 
 def process(num, particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir) :
 
@@ -93,9 +93,9 @@ def process(num, particle_number, window_width, window_height, T, k, g, dt, radi
 if __name__ == '__main__':
 
     if sys.argv[1] == "RR" :
-        sim = {"sim_name":"RR", "range": list(map(lambda x : x/100, range( 100, 1000)))} # fr/mr
+        sim = {"sim_name":"RR", "range": list(map(lambda x : x/100, range( 10, 100)))} # fr/mr
     elif sys.argv[1] == "MR" :
-        sim = {"sim_name":"MR", "range": list(map(lambda x : x/100, range( 100, 1000)))} # fm/mm
+        sim = {"sim_name":"MR", "range": list(map(lambda x : x/100, range( 10, 100)))} # fm/mm
     elif sys.argv[1] == "D" :
         sim = {"sim_name":"D",  "range": list(map(lambda x : x/1000, range( 1, 100)))}
     else :
