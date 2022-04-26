@@ -12,14 +12,14 @@ k = 1
 g = 10
 dt = 0.01
 procs_num = 100
-radius_rate = 1/10
-mass_rate = 1/10
+radius_rate = 10
+mass_rate = 100
 
-def process(num, particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir) :
+def process(process_num, particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir) :
 
     filename = "HIST_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, radius_rate, mass_rate , k, g, dt)
     # length = len(list(filter(lambda x : filename in x,os.listdir(data_dir))))
-    f = open(data_dir+'/'+filename+"_({})".format(num)+".csv", "a+")
+    f = open(data_dir+'/'+filename+"_({})".format(process_num)+".csv", "a+")
     f.write("time;final_velocity;density\n")
     density = particle_number/(window_width*window_height)
     cnt_hit_cur_v = 0
@@ -27,8 +27,8 @@ def process(num, particle_number, window_width, window_height, T, k, g, dt, radi
     t = 0.0
     fp_m = 1
     fp_r = 1
-    mp_r = fp_r/radius_rate
-    mp_m = fp_m/mass_rate
+    mp_r = fp_r*radius_rate
+    mp_m = fp_m*mass_rate
 
     num_top = 0
     num_bottom = 0
@@ -82,8 +82,8 @@ def process(num, particle_number, window_width, window_height, T, k, g, dt, radi
 
         
         vys.append(mp.vy)
-        if len(vys) > 5000 :
-            if abs(sum(vys[-5000:])/5000 - mp.vy) < 0.1 :
+        if len(vys) > 1000 :
+            if abs(sum(vys[-1000:])/1000 - mp.vy) < 0.1 :
                 cnt_hit_cur_v += 1
             if cnt_hit_cur_v > 50 :
                 break
@@ -91,20 +91,19 @@ def process(num, particle_number, window_width, window_height, T, k, g, dt, radi
     f.close()
 
 if __name__ == '__main__':
-
     if sys.argv[1] == "RR" :
-        sim = {"sim_name":"RR", "range": list(map(lambda x : x/100, range( 10, 100)))} # fr/mr
+        sim = {"sim_name":"RR", "range": list(map(lambda x : x,  range( 1, 100)))} # fr/mr
     elif sys.argv[1] == "MR" :
-        sim = {"sim_name":"MR", "range": list(map(lambda x : x/100, range( 10, 100)))} # fm/mm
+        sim = {"sim_name":"MR", "range": list(map(lambda x : x,  range( 1, 100)))} # fm/mm
     elif sys.argv[1] == "D" :
         sim = {"sim_name":"D",  "range": list(map(lambda x : x/1000, range( 1, 100)))}
     else :
-        sim = {"sim_name":"T",  "range": list(map(lambda x : x*100, range( 1, 100)))}
+        sim = {"sim_name":"T",  "range": list(map(lambda x : x*100,  range( 1, 100)))}
     print(sim['range'])
     data_dir = 'result_'+sim['sim_name']
     if not data_dir in os.listdir() :
         os.mkdir(data_dir)
-    for num in range(procs_num):
+    for num in range(int(procs_num)):
         if sim['sim_name'] == "T" :
             for T in sim['range'] :
                 p =Process(target=process, args=(num, particle_number,                       window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
@@ -121,5 +120,3 @@ if __name__ == '__main__':
             for density in sim['range'] :
                 p =Process(target=process, args=(num, int(density*window_height*window_width),    window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir))
                 p.start()
-    # p =Process(target=process, args=(particle_number, window_width, window_height, T, k, g, dt))
-    # p.start()
