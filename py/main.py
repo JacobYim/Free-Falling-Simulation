@@ -15,7 +15,7 @@ procs_num = 100
 radius_rate = 10
 mass_rate = 100
 
-def process(process_num, particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir) :
+def process(process_num, particle_number, window_width, window_height, T, k, g, dt, radius_rate, mass_rate, data_dir, reverse=False) :
 
     filename = "HIST_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(particle_number, window_width, window_height, T, radius_rate, mass_rate , k, g, dt)
     # length = len(list(filter(lambda x : filename in x,os.listdir(data_dir))))
@@ -29,6 +29,9 @@ def process(process_num, particle_number, window_width, window_height, T, k, g, 
     fp_r = 1
     mp_r = fp_r*radius_rate
     mp_m = fp_m*mass_rate
+    if reverse :
+        mp_r = 10
+        fp_r = 1*radius_rate
 
     num_top = 0
     num_bottom = 0
@@ -91,7 +94,9 @@ def process(process_num, particle_number, window_width, window_height, T, k, g, 
     f.close()
 
 if __name__ == '__main__':
-    if sys.argv[1] == "RR" :
+    if sys.argv[1] == "RRR" :
+        sim = {"sim_name":"RRR", "range": list(map(lambda x : x,  range( 1, 100)))} # fr/mr
+    elif sys.argv[1] == "RR" :
         sim = {"sim_name":"RR", "range": list(map(lambda x : x,  range( 1, 100)))} # fr/mr
     elif sys.argv[1] == "MR" :
         sim = {"sim_name":"MR", "range": list(map(lambda x : x,  range( 1, 100)))} # fm/mm
@@ -111,6 +116,11 @@ if __name__ == '__main__':
         elif sim['sim_name'] == "RR" :
             for rr in sim['range'] :
                 p =Process(target=process, args=(num, particle_number,                       window_width, window_height, T, k, g, dt, rr, mass_rate, data_dir))
+                p.start()
+        elif sim['sim_name'] == "RRR" :
+            for rr in sim['range'] :
+                reverse=True
+                p =Process(target=process, args=(num, particle_number,                       window_width, window_height, T, k, g, dt, rr, mass_rate, data_dir, reverse))
                 p.start()
         elif sim['sim_name'] == "MR" :
             for mr in sim['range'] :
