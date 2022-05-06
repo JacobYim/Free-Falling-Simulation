@@ -101,7 +101,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == "MR" :
         sim = {"sim_name":"MR", "range": list(map(lambda x : x,  range( 1, 100)))} # fm/mm
     elif sys.argv[1] == "D" :
-        sim = {"sim_name":"D",  "range": list(map(lambda x : x/1000, range( 1, 100)))}
+        sim = {"sim_name":"D",  "range": list(map(lambda x : x/1000, range( 1 if int(sys.argv[2]) == 1 else (int(sys.argv[2])-1)*10, int(sys.argv[2])*10)))}
     else :
         sim = {"sim_name":"T",  "range": list(map(lambda x : x*100,  range( 1 if int(sys.argv[2]) == 1 else (int(sys.argv[2])-1)*10, int(sys.argv[2])*10)))}
     print(sim['range'])
